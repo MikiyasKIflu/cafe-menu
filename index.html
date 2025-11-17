@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="am">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto+Slab&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --accent:#ff8a00;
+  --green:#28a745; /* category titles */
+  --red:#ff4d4d;
+  --card-bg: rgba(255,255,255,0.98);
+  --dark: #0b0b0b;
+  --price-bg: #e0e0e0;
+  --admin-bg: #ff8a00;
+  --admin-color: #061014;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family: "Segoe UI", system-ui, -apple-system, "Noto Sans", Arial;
+  color: #e6f9e6;
+  padding:12px;
+  background: url("background.png") no-repeat center center fixed;
+  background-size: cover;
+}
+body::before {
+  content:"";
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background: rgba(0,0,0,0.3);
+  z-index:-1;
+}
+header{
+  text-align:center;
+  margin-bottom:18px;
+}
+
+/* ================= Keyframes for breathing glow ================= */
+@keyframes breathe-glow {
+  0% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255,138,0,0.6)); opacity:1; }
+  50% { transform: scale(1.1); filter: drop-shadow(0 0 20px rgba(255,138,0,0.9)); opacity:0.9; }
+  100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255,138,0,0.6)); opacity:1; }
+}
+
+/* ================= Logo ================= */
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.logo {
+  width: 140px;
+  height: auto;
+  border-radius: 20px; /* small rounded corners */
+  animation: breathe-glow 2.5s infinite ease-in-out;
+}
+
+/* ================= Cafe Names ================= */
+h1{
+  font-family: 'Pacifico', cursive;
+  font-size:36px;
+  color: #ff8a00;
+  letter-spacing:1px;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  animation: breathe-glow 2.5s infinite ease-in-out;
+}
+.sub {
+  font-family: 'Montserrat', sans-serif;
+  font-size:20px;
+  color:#28a745;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  animation: breathe-glow 2.5s infinite ease-in-out;
+}
+
+/* ================= Main ================= */
+main{
+  max-width:1100px;
+  margin: 0 auto 24px auto;
+}
+.category { margin-top:22px; }
+.category-header { margin-bottom:12px; }
+.category-title {
+  font-size:20px;
+  color:var(--green);
+  font-weight:800;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+  margin-bottom:6px;
+  animation: breathe-glow 2.5s infinite ease-in-out;
+}
+.cards {
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
+  gap:12px;
+}
+.card {
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--dark);
+  border-radius:12px;
+  padding:12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  min-height:120px;
+  transition: transform .12s ease;
+}
+.card:hover { transform: translateY(-4px); }
+.card.unavailable { opacity:0.6; filter:grayscale(0.25); border: 2px dashed rgba(255,100,100,0.25); }
+.card .name { font-weight:800; font-size:16px; color: var(--dark); word-wrap:break-word; }
+.card .name span { display:block; font-weight:400; font-size:14px; color:#333; }
+.price-row { display:flex; align-items:center; justify-content:flex-end; gap:8px; }
+.price { font-weight:900; font-size:18px; color: var(--dark); background: var(--price-bg) !important; padding:6px 10px; border-radius:8px; min-width:80px; text-align:right; }
+
+/* Breathing animation: orange ↔ green + font size */
+@keyframes breathe {
+  0% {
+    color: #ff6600;   /* Orange */
+    font-size: 24px;
+  }
+  50% {
+    color: #00cc44;   /* Green */
+    font-size: 28px;
+  }
+  100% {
+    color: #ff6600;
+    font-size: 24px;
+  }
+}
+
+@keyframes breatheEn {
+  0% {
+    color: #ff6600;
+    font-size: 24px;
+  }
+  50% {
+    color: #00cc44;
+    font-size: 28px;
+  }
+  100% {
+    color: #ff6600;
+    font-size: 24px;
+  }
+}
+
+@keyframes breatheCopy {
+  0% {
+    color: #ff6600;
+    font-size: 22px;
+  }
+  50% {
+    color: #00cc44;
+    font-size: 26px;
+  }
+  100% {
+    color: #ff6600;
+    font-size: 22px;
+  }
+}
+
+/* Footer styles */
+.footer-am {
+    font-family: 'Noto Sans Ethiopic', sans-serif;
+    text-align: center;
+    margin-top: 15px;
+    animation: breathe 3s infinite ease-in-out;
+}
+
+.footer-en {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    margin-top: 10px;
+    animation: breatheEn 3.5s infinite ease-in-out;
+}
+
+.footer-copyright {
+    font-family: 'Courier New', monospace;
+    text-align: center;
+    margin-top: 10px;
+    animation: breatheCopy 4s infinite ease-in-out;
+}
+
+.admin-btn {
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background: var(--admin-bg);
+  color: var(--admin-color);
+  font-weight:700;
+  padding:12px 20px;
+  border-radius:50px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+  cursor:pointer;
+  z-index:1000;
+}
+.admin-modal {
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background: rgba(0,0,0,0.8);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
+  padding:12px;
+}
+.admin-content {
+  background:#fff;
+  border-radius:12px;
+  padding:24px;
+  max-width:500px;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.admin-content h2 { margin:0 0 12px 0; text-align:center; }
+.admin-content textarea, .admin-content input{
+  padding:10px;
+  font-size:16px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  width:100%;
+  resize:vertical;
+}
+.admin-content button {
+  background: var(--admin-bg);
+  color: var(--admin-color);
+  font-weight:700;
+  padding:10px;
+  border-radius:8px;
+  border:none;
+  cursor:pointer;
+}
+
+@media (max-width:640px){
+  main{padding:0 8px;}
+  .card { min-height:140px; }
+  h1{font-size:28px;}
+  .sub{font-size:16px;}
+  .price { font-size:16px; min-width:70px; padding:5px 8px; }
+  .category-title{font-size:18px;}
+  .admin-content{padding:16px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <!-- Logo -->
+  <div class="logo-container">
+    <img src="Selamcafe.png" alt="Selam Cafe Logo" class="logo">
+  </div>
+  <!-- Cafe Name -->
+  <h1>ሰላም ጁስ ፒዛ እና በርገር</h1>
+  <div class="sub">Selam Juice, Pizza & Burger — Full Menu</div>
+</header>
+
+<main id="app">
+
+<!-- ================= Vegetable ================= -->
+<div class="category">
+  <div class="category-header"><div class="category-title">አትክልት (Vegetable)</div></div>
+  <div class="cards">
+    <div class="card"><div class="name">ፍሩት ፖንች <span>Fruit Punch</span></div><div class="price-row"><div class="price">180</div></div></div>
+    <div class="card"><div class="name">ኖርማል አትክልት <span>Normal Fruit</span></div><div class="price-row"><div class="price">250</div></div></div>
+    <div class="card"><div class="name">ስፔሻል አትክልት <span>Special Fruit</span></div><div class="price-row"><div class="price">350</div></div></div>
+    <div class="card"><div class="name">ኖርማል ኮሌክሽን <span>Normal Collection</span></div><div class="price-row"><div class="price">350</div></div></div>
+    <div class="card"><div class="name">ስፔሻል ኮሌክሽን <span>Special Collection</span></div><div class="price-row"><div class="price">450</div></div></div>
+    <div class="card"><div class="name">አትክልት በቱና <span>Atkilt with Tuna</span></div><div class="price-row"><div class="price">300</div></div></div>
+    <div class="card"><div class="name">ዶሮ አትክልት <span>Atkilt with Chicken</span></div><div class="price-row"><div class="price">400</div></div></div>
+  </div>
+</div>
+
+<!-- ================= Fish ================= -->
+<div class="category">
+  <div class="category-header"><div class="category-title">አሳ (Fish)</div></div>
+  <div class="cards">
+    <div class="card"><div class="name">ለብለብ <span>Lebleb</span></div><div class="price-row"><div class="price">380</div></div></div>
+    <div class="card"><div class="name">ጉላሽ <span>Goulash</span></div><div class="price-row"><div class="price">400</div></div></div>
+    <div class="card"><div class="name">ኮተሌት <span>Cotelet</span></div><div class="price-row"><div class="price">400</div></div></div>
+    <div class="card"><div class="name">አስተርድ ፍራይድ ፊሽ <span>Stirred Fried Fish</span></div><div class="price-row"><div class="price">350</div></div></div>
+    <div class="card"><div class="name">ፊንገር ፊሽ <span>Finger Fish</span></div><div class="price-row"><div class="price">350</div></div></div>
+    <div class="card"><div class="name">ሰላም እስፔሻል አሳ <span>Special Fish</span></div><div class="price-row"><div class="price">450</div></div></div>
+  </div>
+</div>
+
+<!-- ================= Pasta & Rice ================= -->
+<div class="category">
+  <div class="category-header"><div class="category-title">ፓስታና ሩዝ (Pasta & Rice)</div></div>
+  <div class="cards">
+    <div class="card"><div class="name">ፓስታ በአትክልት / ሩዝ በአትክልት <span>Pasta/Rice with Vegetables</span></div><div class="price-row"><div class="price">180</div></div></div>
+    <div class="card"><div class="name">ፓስታ በስልስ / ሩዝ በስልስ <span>Pasta/Rice with Sauce</span></div><div class="price-row"><div class="price">180</div></div></div>
+    <div class="card"><div class="name">ፓስታ በስጋ / ሩዝ በስጋ <span>Pasta/Rice with Meat</span></div><div class="price-row"><div class="price">180</div></div></div>
+    <div class="card"><div class="name">ፓስታ በቱና / ሩዝ በቱና <span>Pasta/Rice with Tuna</span></div><div class="price-row"><div class="price">300</div></div></div>
+    <div class="card"><div class="name">ፓስታ በእንቁላል / ሩዝ በእንቁላል <span>Pasta/Rice with Egg</span></div><div class="price-row"><div class="price">250</div></div></div>
+    <div class="card"><div class="name">ስፔሻል ፓስታ / ስፔሻል ሩዝ <span>Special Pasta / Special Rice</span></div><div class="price-row"><div class="price">350</div></div></div>
+  </div>
+</div>
+
+<!-- ================= Pizza ================= -->
+<div class="category">
+  <div class="category-header"><div class="category-title">ፒዛ (Pizza)</div></div>
+  <div class="cards">
+    <div class="card"><div class="name">አትክልት ፒዛ <span>Vegetable Pizza</span></div><div class="price-row"><div class="price">300</div></div></div>
+    <div class="card"><div class="name">ቢፍ ቱና ፒዛ <span>Beef Pizza</span></div><div class="price-row"><div class="price">340</div></div></div>
+    <div class="card"><div class="name">መርጋሪታ ፒዛ <span>Tuna Pizza</span></div><div class="price-row"><div class="price">430</div></div></div>
+    <div class="card"><div class="name">ሰላም ስፔሻል ፒዛ <span>Margherita Pizza</span></div><div class="price-row"><div class="price">600</div></div></div>
+    <div class="card"><div class="name">ስፔሻል ፒዛ <span>Selam Special Pizza</span></div><div class="price-row"><div class="price">530</div></div></div>
+    <div class="card"><div class="name">ዶሮ ፒዛ <span>Chicken Pizza</span></div><div class="price-row"><div class="price">600</div></div></div>
+    <div class="card"><div class="name">ችክን ስፓይሲ ፒዛ <span>Chicken Spices Pizza</span></div><div class="price-row"><div class="price">550</div></div></div>
+    <div class="card"><div class="name">ቢፍ ፒዛ በቺዝ <span>Beef Pizza with Cheese</span></div><div class="price-row"><div class="price">460</div></div></div>
+    <div class="card"><div class="name">ቱና ፒዛ በቺዝ <span>Tuna Pizza with Cheese</span></div><div class="price-row"><div class="price">460</div></div></div>
+  </div>
+</div>
+
+<!-- ================= Burger ================= -->
+<div class="category">
+  <div class="category-header"><div class="category-title">በርገር (Burger)</div></div>
+  <div class="cards">
+    <div class="card"><div class="name">ቢፍ በርገር <span>Beef Burger</span></div><div class="price-row"><div class="price">230</div></div></div>
+    <div class="card"><div class="name">ቺዝ በርገር <span>Cheese Burger</span></div><div class="price-row"><div class="price">270</div></div></div>
+    <div class="card"><div class="name">ሰላም ስፔሻል በርገር <span>Selam Special Burger</span></div><div class="price-row"><div class="price">380</div></div></div>
+    <div class="card"><div class="name">ስፔሻል በርገር <span>Special Burger</span></div><div class="price-row"><div class="price">350</div></div></div>
+    <div class="card"><div class="name">ደብል ስፔሻል በርገር <span>Double Special Burger</span></div><div class="price-row"><div class="price">500</div></div></div>
+    <div class="card"><div class="name">ደብል በርገር <span>Double Burger</span></div><div class="price-row"><div class="price">340</div></div></div>
+    <div class="card"><div class="name">ቱና ሳንዱች <span>Tuna Sandwich</span></div><div class="price-row"><div class="price">300</div></div></div>
+    <div class="card"><div class="name">እንቁላል ሳንዱች <span>Egg Sandwich</span></div><div class="price-row"><div class="price">150</div></div></div>
+    <div class="card"><div class="name">ዶሮ በርገር <span>Chicken Burger</span></div><div class="price-row"><div class="price">350</div></div></div>
+    <div class="card"><div class="name">ደብል ቺዝ በርገር <span>Double Cheese Burger</span></div><div class="price-row"><div class="price">340</div></div></div>
+    <div class="card"><div class="name">ክለብ ሳንዱች <span>Club Sandwich</span></div><div class="price-row"><div class="price">300</div></div></div>
+    <div class="card"><div class="name">አትክልት ሳንዱች <span>Vegetable Sandwich</span></div><div class="price-row"><div class="price">150</div></div></div>
+  </div>
+</div>
+
+<!-- ================= Juice ================= -->
+<div class="category">
+  <div class="category-header"><div class="category-title">ጁስ (Juice)</div></div>
+  <div class="cards">
+    <div class="card"><div class="name">ሐብሐብ ጁስ <span>Watermelon Juice</span></div><div class="price-row"><div class="price">180</div></div></div>
+    <div class="card"><div class="name">በማር የተቀላቀለ ቲማቲም ጁስ <span>Juice with Honey</span></div><div class="price-row"><div class="price">180</div></div></div>
+    <div class="card"><div class="name">ቲማቲም ጁስ <span>Tomato Juice</span></div><div class="price-row"><div class="price">150</div></div></div>
+    <div class="card"><div class="name">አምበሾክ ጁስ <span>Ambeshok Juice</span></div><div class="price-row"><div class="price">200</div></div></div>
+    <div class="card"><div class="name">እስትሮቨሪ ጁስ <span>Strawberry Juice</span></div><div class="price-row"><div class="price">180</div></div></div>
+    <div class="card"><div class="name">ማንጎ ጁስ <span>Mango Juice</span></div><div class="price-row"><div class="price">180</div></div></div>
+    <div class="card"><div class="name">አቮካዶ ጁስ <span>Avocado Juice</span></div><div class="price-row"><div class="price">150</div></div></div>
+    <div class="card"><div class="name">ፓፓያ ጁስ <span>Papaya Juice</span></div><div class="price-row"><div class="price">150</div></div></div>
+    <div class="card"><div class="name">ብርትኳን ጁስ <span>Orange Juice</span></div><div class="price-row"><div class="price">200</div></div></div>
+    <div class="card"><div class="name">አናናስ ጁስ <span>Pineapple Juice</span></div><div class="price-row"><div class="price">180</div></div></div>
+    <div class="card"><div class="name">ሎሚ ጁስ <span>Lemon Juice</span></div><div class="price-row"><div class="price">180</div></div></div>
+    <div class="card"><div class="name">እስፕሪስ ጁስ <span>Sprice Juice</span></div><div class="price-row"><div class="price">150</div></div></div>
+    <div class="card"><div class="name">ስሙዚ ጁስ <span>Smoothie Juice</span></div><div class="price-row"><div class="price">230</div></div></div>
+    <div class="card"><div class="name">አቮካዶ ሼክ <span>Avocado Shake</span></div><div class="price-row"><div class="price">220</div></div></div>
+    <div class="card"><div class="name">ማንጎ ሼክ <span>Mango Shake</span></div><div class="price-row"><div class="price">220</div></div></div>
+    <div class="card"><div class="name">ሚክስድ ሼክ <span>Mixed Juice</span></div><div class="price-row"><div class="price">180</div></div></div>
+    <div class="card"><div class="name">አቢሲኒያ ሼክ <span>Abyssinia Juice</span></div><div class="price-row"><div class="price">250</div></div></div>
+    <div class="card"><div class="name">ሰላም ስፔሻል ሼክ <span>Selam Special Juice</span></div><div class="price-row"><div class="price">230</div></div></div>
+    <div class="card"><div class="name">ሰላም ስፔሻል ፕላስ ሼክ <span>Selam Special Plus Juice</span></div><div class="price-row"><div class="price">230</div></div></div>
+    <div class="card"><div class="name">እስትሮቨሪ ሼክ <span>Strawberry Shake</span></div><div class="price-row"><div class="price">260</div></div></div>
+    <div class="card"><div class="name">ቸኮሌት ሼክ <span>Chocolate Shake</span></div><div class="price-row"><div class="price">260</div></div></div>
+    <div class="card"><div class="name">ሙዝ ሼክ <span>Banana Shake</span></div><div class="price-row"><div class="price">220</div></div></div>
+    <div class="card"><div class="name">ሰላም ሼክ <span>Selam Shake</span></div><div class="price-row"><div class="price">250</div></div></div>
+  </div>
+</div>
+<!-- ================= Mojito ================= -->
+<div class="category">
+  <div class="category-header"><div class="category-title">ሞጂቶ (Mojito)</div></div>
+  <div class="cards">
+    <div class="card"><div class="name">ሎሚ <span>Lemon</span></div><div class="price-row"><div class="price">250</div></div></div>
+    <div class="card"><div class="name">ሐብሐብ <span>Watermelon</span></div><div class="price-row"><div class="price">250</div></div></div>
+    <div class="card"><div class="name">ብርቱኳን <span>Orange</span></div><div class="price-row"><div class="price">250</div></div></div>
+    <div class="card"><div class="name">አናናስ <span>Pineapple</span></div><div class="price-row"><div class="price">250</div></div></div>
+    <div class="card"><div class="name">እስትሮቨሪ <span>Strawberry</span></div><div class="price-row"><div class="price">250</div></div></div>
+  </div>
+</div>
+
+<!-- ================= Breakfast ================= -->
+<div class="category">
+  <div class="category-header"><div class="category-title">ቁርስ (Breakfast)</div></div>
+  <div class="cards">
+    <div class="card"><div class="name">ፉል <span>Full</span></div><div class="price-row"><div class="price">120</div></div></div>
+    <div class="card"><div class="name">ፉል ስፔሻል <span>Special Full</span></div><div class="price-row"><div class="price">180</div></div></div>
+    <div class="card"><div class="name">ፉል በእንቁላል <span>Full with Egg</span></div><div class="price-row"><div class="price">160</div></div></div>
+    <div class="card"><div class="name">እንቁላል በስጋ <span>Egg with Meat</span></div><div class="price-row"><div class="price">250</div></div></div>
+    <div class="card"><div class="name">እንቁላል ሥልስ <span>Egg Salad</span></div><div class="price-row"><div class="price">150</div></div></div>
+    <div class="card"><div class="name">እንቁላል ኦምሌት <span>Egg Omelette</span></div><div class="price-row"><div class="price">170</div></div></div>
+    <div class="card"><div class="name">እንቁላል በቱና <span>Egg with Tuna</span></div><div class="price-row"><div class="price">250</div></div></div>
+    <div class="card"><div class="name">እንቁላል በፍርፍር <span>Egg Crumb</span></div><div class="price-row"><div class="price">150</div></div></div>
+    <div class="card"><div class="name">እንቁላል በአቮካዶ <span>Egg with Avocado</span></div><div class="price-row"><div class="price">180</div></div></div>
+    <div class="card"><div class="name">ጨጨብሳ <span>Chchebsa</span></div><div class="price-row"><div class="price">150</div></div></div>
+    <div class="card"><div class="name">መለዋ <span>Melewa</span></div><div class="price-row"><div class="price">130</div></div></div>
+    <div class="card"><div class="name">ፈጢራ <span>Fatira</span></div><div class="price-row"><div class="price">180</div></div></div>
+    <div class="card"><div class="name">ስፔሻል ፈጢራ <span>Special Fatira</span></div><div class="price-row"><div class="price">220</div></div></div>
+    <div class="card"><div class="name">ሰላም ስፔሻል ፈጢራ <span>Selam Special Fatira</span></div><div class="price-row"><div class="price">300</div></div></div>
+    <div class="card"><div class="name">ስፔሻል ጨጨብሳ <span>Special Chechebsa</span></div><div class="price-row"><div class="price">180</div></div></div>
+  </div>
+</div>
+
+<!-- ================= Drinks & Water ================= -->
+<div class="category">
+  <div class="category-header"><div class="category-title">ለስላሳ መጠጦችና ውሃ (Drinks & Water)</div></div>
+  <div class="cards">
+    <div class="card"><div class="name">ኮካ <span>Coca Cola</span></div><div class="price-row"><div class="price">50</div></div></div>
+    <div class="card"><div class="name">ፔፖሲ <span>Pepsi</span></div><div class="price-row"><div class="price">50</div></div></div>
+    <div class="card"><div class="name">ኖቪዳ <span>Novida</span></div><div class="price-row"><div class="price">60</div></div></div>
+    <div class="card"><div class="name">ንጉስ <span>Neguse</span></div><div class="price-row"><div class="price">70</div></div></div>
+    <div class="card"><div class="name">ሶፊ <span>Sofi</span></div><div class="price-row"><div class="price">70</div></div></div>
+    <div class="card"><div class="name">ውሃ 2 ሊትር <span>Water 2L</span></div><div class="price-row"><div class="price">60</div></div></div>
+    <div class="card"><div class="name">ውሃ 1 ሊትር <span>Water 1L</span></div><div class="price-row"><div class="price">40</div></div></div>
+    <div class="card"><div class="name">ውሃ 0.5 ሊትር <span>Water 0.5L</span></div><div class="price-row"><div class="price">25</div></div></div>
+  </div>
+</div>
+
+<!-- ================= National Dish ================= -->
+<div class="category">
+  <div class="category-header"><div class="category-title">የባህል ምግቦች (National Dish)</div></div>
+  <div class="cards">
+    <div class="card"><div class="name">ቋንጣ ፍርፍር <span>Quanta Ferere</span></div><div class="price-row"><div class="price">350</div></div></div>
+    <div class="card"><div class="name">ጥብስ ፍርፍር <span>Tehese Ferefer</span></div><div class="price-row"><div class="price">300</div></div></div>
+    <div class="card"><div class="name">ስፔሻል ፍርፍር <span>Special Ferefer</span></div><div class="price-row"><div class="price">350</div></div></div>
+    <div class="card"><div class="name">ስፔሻል የፆም ፍርፍር <span>Special Fasting Ferefer</span></div><div class="price-row"><div class="price">350</div></div></div>
+    <div class="card"><div class="name">ስፔሻል የፍስግ ፍርፍር <span>Special Fasting Yefsk</span></div><div class="price-row"><div class="price">350</div></div></div>
+    <div class="card"><div class="name">ሽሮ <span>Shero</span></div><div class="price-row"><div class="price">150</div></div></div>
+    <div class="card"><div class="name">ተጋቢኖ <span>Tegabino</span></div><div class="price-row"><div class="price">150</div></div></div>
+    <div class="card"><div class="name">ቦዘና ሽሮ <span>Bozena Shero</span></div><div class="price-row"><div class="price">200</div></div></div>
+    <div class="card"><div class="name">ሙሉ ዶሮ <span>Full Chicken</span></div><div class="price-row"><div class="price">1800</div></div></div>
+    <div class="card"><div class="name">ግማሽ ዶሮ <span>Half Chicken</span></div><div class="price-row"><div class="price">900</div></div></div>
+    <div class="card"><div class="name">ሰላም ስፔሻል ሸዋርማ <span>Selam Special Shawarma</span></div><div class="price-row"><div class="price">600</div></div></div>
+    <div class="card"><div class="name">ቺክን ራኘ <span>Chicken Rap</span></div><div class="price-row"><div class="price">400</div></div></div>
+    <div class="card"><div class="name">ቦሪቶ <span>Borito</span></div><div class="price-row"><div class="price">500</div></div></div>
+    <div class="card"><div class="name">ስፔሻል ናሼፍ <span>Special Nachef</span></div><div class="price-row"><div class="price">500</div></div></div>
+    <div class="card"><div class="name">ኖርማል ናሼፍ <span>Normal Nachef</span></div><div class="price-row"><div class="price">350</div></div></div>
+  </div>
+</div>
+
+</main>
+
+
+<footer class="footer-am">
+  ምርጫዎ ስላደረጉን እናመሰግናለን
+</footer>
+<footer class="footer-en">
+  Thank you For Choosing us
+</footer>
+<footer class="footer-copyright">
+  &copy; 2025 Selam Juice, Pizza & Burger
+</footer>
+
+
+<!-- Admin Button -->
+<button class="admin-btn" onclick="openAdmin()">Admin</button>
+
+<!-- Admin Button -->
+<button class="admin-btn" onclick="openAdmin()">Admin</button>
+
+<!-- ================= Admin Modal ================= -->
+<div id="adminModal" class="admin-modal">
+  <div class="admin-content" style="background: url('background.png') no-repeat center center; background-size: cover; color:#fff; padding:24px;">
+    <h2>Admin Login</h2>
+    <input type="password" id="adminPassword" placeholder="Enter password">
+    <button onclick="loginAdmin()">Login</button>
+
+    <div id="priceEditor" style="display:none;">
+      <h2>Edit Menu / ምርጫ አስተካክል</h2>
+      <button onclick="logoutAdmin()" style="background:#ff4d4d;color:#fff;margin-bottom:10px;">Logout</button>
+      <div id="menuItemsList" style="max-height:300px; overflow-y:auto;"></div>
+
+      <h3>Add New Item</h3>
+      <input type="text" id="newItemName" placeholder="Item Name / እቃ ስም">
+      <input type="text" id="newItemEng" placeholder="English Name">
+      <input type="number" id="newItemPrice" placeholder="Price / ዋጋ">
+      <select id="newItemCategory">
+        <option value="አትክልት (Vegetable)">አትክልት (Vegetable)</option>
+        <option value="አሳ (Fish)">አሳ (Fish)</option>
+        <option value="ፓስታና ሩዝ (Pasta & Rice)">ፓስታና ሩዝ (Pasta & Rice)</option>
+        <option value="ፒዛ (Pizza)">ፒዛ (Pizza)</option>
+        <option value="በርገር (Burger)">በርገር (Burger)</option>
+        <option value="ጁስ (Juice)">ጁስ (Juice)</option>
+        <option value="ሞጂቶ (Mojito)">ሞጂቶ (Mojito)</option>
+        <option value="ቁርስ (Breakfast)">ቁርስ (Breakfast)</option>
+        <option value="ለስላሳ መጠጦችና ውሃ (Drinks & Water)">ለስላሳ መጠጦችና ውሃ (Drinks & Water)</option>
+        <option value="የባህል ምግቦች (National Dish)">የባህል ምግቦች (National Dish)</option>
+      </select>
+      <button onclick="addMenuItem()" style="background:#28a745;color:#fff;margin-top:5px;">Add Item / አክል</button>
+    </div>
+  </div>
+</div>
+
+<button class="admin-btn" onclick="openAdminModal()">Admin</button>
+
+<script>
+let menuData = []; // store all menu items
+
+function openAdminModal() {
+  document.getElementById("adminModal").style.display = "flex";
+}
+
+document.getElementById("adminModal").addEventListener("click", function(e) {
+  if(e.target.id === "adminModal") {
+    document.getElementById("adminModal").style.display = "none";
+  }
+});
+
+function loginAdmin() {
+  const pw = document.getElementById("adminPassword").value;
+  if(pw !== "1234") { alert("Wrong password!"); return; }
+
+  document.getElementById("adminPassword").style.display = "none";
+  document.querySelector("#adminModal button").style.display = "none";
+  document.getElementById("priceEditor").style.display = "block";
+
+  loadMenuItems();
+}
+
+function logoutAdmin() {
+  location.reload(); // simple reload to exit admin mode
+}
+
+function loadMenuItems() {
+  menuData = [];
+  const cards = document.querySelectorAll("main .card");
+  const list = document.getElementById("menuItemsList");
+  list.innerHTML = "";
+  cards.forEach((card, i) => {
+    const name = card.querySelector(".name").innerText;
+    const priceDiv = card.querySelector(".price");
+    menuData.push({card, priceDiv});
+
+    const itemDiv = document.createElement("div");
+    itemDiv.style.marginBottom = "10px";
+    itemDiv.innerHTML = `
+      <strong style="font-weight:bold;">${name}</strong><br>
+      Edit Price / ዋጋ: <input type="number" value="${priceDiv.innerText}" data-index="${i}" style="width:80px;">
+      <button onclick="removeItem(${i})" style="background:#ff4d4d;color:#fff;margin-left:5px;">Remove / አስወግድ</button>
+    `;
+    list.appendChild(itemDiv);
+  });
+}
+
+function savePrices() {
+  const inputs = document.querySelectorAll("#menuItemsList input");
+  inputs.forEach(input => {
+    const idx = input.dataset.index;
+    menuData[idx].priceDiv.innerText = input.value;
+  });
+  alert("Prices updated!");
+}
+
+function addMenuItem() {
+  const name = document.getElementById("newItemName").value.trim();
+  const eng = document.getElementById("newItemEng").value.trim();
+  const price = document.getElementById("newItemPrice").value.trim();
+  const category = document.getElementById("newItemCategory").value;
+
+  if(!name || !price) { alert("Please fill name and price"); return; }
+
+  // find category container
+  let catDiv = Array.from(document.querySelectorAll(".category")).find(c => c.querySelector(".category-title").innerText === category);
+  if(!catDiv) {
+    alert("Category not found!"); return;
+  }
+
+  const cardsDiv = catDiv.querySelector(".cards");
+  const newCard = document.createElement("div");
+  newCard.className = "card";
+  newCard.innerHTML = `<div class="name">${name} <span>${eng}</span></div>
+                        <div class="price-row"><div class="price">${price}</div></div>`;
+  cardsDiv.appendChild(newCard);
+
+  // reload admin items
+  loadMenuItems();
+
+  document.getElementById("newItemName").value = "";
+  document.getElementById("newItemEng").value = "";
+  document.getElementById("newItemPrice").value = "";
+}
+
+function removeItem(index) {
+  menuData[index].card.remove();
+  loadMenuItems();
+}
+</script>
+
+</body>
+</html>
